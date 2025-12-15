@@ -14,11 +14,7 @@ const StockAnalyzer = () => {
     es: { name: '🇪🇸 Español', code: 'es' },
     fr: { name: '🇫🇷 Français', code: 'fr' },
     de: { name: '🇩🇪 Deutsch', code: 'de' },
-    pt: { name: '🇵🇹 Português', code: 'pt' },
-    ru: { name: '🇷🇺 Русский', code: 'ru' },
-    zh: { name: '🇨🇳 中文', code: 'zh' },
-    ja: { name: '🇯🇵 日本語', code: 'ja' },
-    ar: { name: '🇸🇦 العربية', code: 'ar' }
+    pt: { name: '🇵🇹 Português', code: 'pt' }
   };
 
   const translations = {
@@ -177,110 +173,6 @@ const StockAnalyzer = () => {
       buy: 'Comprar',
       sell: 'Vender',
       hold: 'Manter'
-    },
-    ru: {
-      title: 'ИИ Анализатор Инвестиций',
-      subtitle: 'Анализ акций на основе ИИ',
-      disclaimer: 'Это информационный анализ, а не финансовая консультация. Рынки непредсказуемы. Всегда консультируйтесь со специалистом.',
-      placeholder: 'Введите тикер (напр: AAPL, TSLA, MSFT, NVDA...)',
-      analyze: 'Анализировать',
-      analyzing: 'Анализ...',
-      recommendation: 'Рекомендация',
-      confidence: 'Уверенность',
-      targetPrice: 'Целевая цена',
-      strengths: 'Преимущества',
-      risks: 'Риски',
-      outlook: 'Перспективы',
-      technicalAnalysis: 'Технический Анализ',
-      fundamentals: 'Фундаментальные данные',
-      news: 'Новости',
-      trend: 'Тренд',
-      support: 'Поддержка',
-      resistance: 'Сопротивление',
-      indicators: 'Индикаторы',
-      marketCap: 'Капитализация',
-      aiAnalysis: 'ИИ Анализ',
-      buy: 'Купить',
-      sell: 'Продать',
-      hold: 'Держать'
-    },
-    zh: {
-      title: 'AI投资分析器',
-      subtitle: 'AI驱动的股票分析',
-      disclaimer: '这是信息分析，不是财务建议。市场不可预测。投资前请咨询专业人士。',
-      placeholder: '输入股票代码（例：AAPL, TSLA, MSFT, NVDA...）',
-      analyze: '分析',
-      analyzing: '分析中...',
-      recommendation: '建议',
-      confidence: '信心',
-      targetPrice: '目标价格',
-      strengths: '优势',
-      risks: '风险',
-      outlook: '展望',
-      technicalAnalysis: '技术分析',
-      fundamentals: '基本面',
-      news: '新闻',
-      trend: '趋势',
-      support: '支撑',
-      resistance: '阻力',
-      indicators: '指标',
-      marketCap: '市值',
-      aiAnalysis: 'AI分析',
-      buy: '买入',
-      sell: '卖出',
-      hold: '持有'
-    },
-    ja: {
-      title: 'AI投資アナライザー',
-      subtitle: 'AIによる株式分析',
-      disclaimer: 'これは情報分析であり、財務アドバイスではありません。市場は予測不可能です。投資前に専門家に相談してください。',
-      placeholder: 'ティッカーを入力（例：AAPL, TSLA, MSFT, NVDA...）',
-      analyze: '分析',
-      analyzing: '分析中...',
-      recommendation: '推奨',
-      confidence: '信頼度',
-      targetPrice: '目標価格',
-      strengths: '強み',
-      risks: 'リスク',
-      outlook: '見通し',
-      technicalAnalysis: 'テクニカル分析',
-      fundamentals: 'ファンダメンタルズ',
-      news: 'ニュース',
-      trend: 'トレンド',
-      support: 'サポート',
-      resistance: 'レジスタンス',
-      indicators: '指標',
-      marketCap: '時価総額',
-      aiAnalysis: 'AI分析',
-      buy: '買い',
-      sell: '売り',
-      hold: '保持'
-    },
-    ar: {
-      title: 'محلل الاستثمار بالذكاء الاصطناعي',
-      subtitle: 'تحليل الأسهم بالذكاء الاصطناعي',
-      disclaimer: 'هذا تحليل معلوماتي وليس نصيحة مالية. الأسواق لا يمكن التنبؤ بها. استشر دائمًا متخصصًا.',
-      placeholder: 'أدخل الرمز (مثال: AAPL, TSLA, MSFT, NVDA...)',
-      analyze: 'تحليل',
-      analyzing: 'جاري التحليل...',
-      recommendation: 'التوصية',
-      confidence: 'الثقة',
-      targetPrice: 'السعر المستهدف',
-      strengths: 'نقاط القوة',
-      risks: 'المخاطر',
-      outlook: 'التوقعات',
-      technicalAnalysis: 'التحليل الفني',
-      fundamentals: 'البيانات الأساسية',
-      news: 'الأخبار',
-      trend: 'الاتجاه',
-      support: 'الدعم',
-      resistance: 'المقاومة',
-      indicators: 'المؤشرات',
-      marketCap: 'القيمة السوقية',
-      aiAnalysis: 'تحليل الذكاء الاصطناعي',
-      buy: 'شراء',
-      sell: 'بيع',
-      hold: 'احتفظ'
     }
   };
 
@@ -299,11 +191,7 @@ const StockAnalyzer = () => {
         es: 'Responde en Español',
         fr: 'Réponds en Français',
         de: 'Antworte auf Deutsch',
-        pt: 'Responda em Português',
-        ru: 'Отвечай на русском',
-        zh: '用中文回答',
-        ja: '日本語で答えてください',
-        ar: 'أجب بالعربية'
+        pt: 'Responda em Português'
       };
 
       const searchResponse = await fetch("https://api.anthropic.com/v1/messages", {
@@ -434,7 +322,7 @@ Important:
         <div className="mt-4 bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 flex gap-3">
           <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-amber-200">
-            <strong>⚠️ {t.confidence}:</strong> {t.disclaimer}
+            <strong>⚠️ Avviso:</strong> {t.disclaimer}
           </div>
         </div>
       </div>
@@ -620,4 +508,36 @@ Important:
               </div>
             )}
 
-            
+            {activeTab === 'news' && (
+              <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
+                <h3 className="text-2xl font-bold mb-6">{t.news}</h3>
+                <div className="space-y-4">
+                  {analysis.recentNews?.map((news, i) => (
+                    <div key={i} className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-semibold mb-2">{news.title}</h4>
+                      <p className="text-slate-400 text-sm mb-2">{news.summary}</p>
+                      <div className="text-slate-500 text-xs">{news.date}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {analysis?.error && (
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-6">
+            <div className="flex items-center gap-3">
+              <AlertCircle className="w-6 h-6 text-red-400" />
+              <p className="text-red-200">{analysis.message}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default StockAnalyzer;

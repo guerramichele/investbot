@@ -1,11 +1,290 @@
 import React, { useState } from 'react';
-import { TrendingUp, Search, BarChart3, Newspaper, Brain, AlertCircle, DollarSign, Activity } from 'lucide-react';
+import { TrendingUp, Search, BarChart3, Newspaper, Brain, AlertCircle, DollarSign, Activity, Globe } from 'lucide-react';
 
 const StockAnalyzer = () => {
   const [ticker, setTicker] = useState('');
+  const [language, setLanguage] = useState('it');
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('analysis');
+
+  const languages = {
+    it: { name: '🇮🇹 Italiano', code: 'it' },
+    en: { name: '🇬🇧 English', code: 'en' },
+    es: { name: '🇪🇸 Español', code: 'es' },
+    fr: { name: '🇫🇷 Français', code: 'fr' },
+    de: { name: '🇩🇪 Deutsch', code: 'de' },
+    pt: { name: '🇵🇹 Português', code: 'pt' },
+    ru: { name: '🇷🇺 Русский', code: 'ru' },
+    zh: { name: '🇨🇳 中文', code: 'zh' },
+    ja: { name: '🇯🇵 日本語', code: 'ja' },
+    ar: { name: '🇸🇦 العربية', code: 'ar' }
+  };
+
+  const translations = {
+    it: {
+      title: 'Analizzatore Investimenti AI',
+      subtitle: 'Analisi azionarie potenziate dall\'intelligenza artificiale',
+      disclaimer: 'Questa è un\'analisi informativa, non un consiglio finanziario. I mercati sono imprevedibili. Consulta sempre un professionista prima di investire.',
+      placeholder: 'Inserisci ticker (es: AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'Analizza',
+      analyzing: 'Analisi...',
+      recommendation: 'Raccomandazione',
+      confidence: 'Confidenza',
+      targetPrice: 'Prezzo obiettivo',
+      strengths: 'Punti di Forza',
+      risks: 'Rischi',
+      outlook: 'Prospettive',
+      technicalAnalysis: 'Analisi Tecnica',
+      fundamentals: 'Dati Fondamentali',
+      news: 'Notizie',
+      trend: 'Trend',
+      support: 'Supporto',
+      resistance: 'Resistenza',
+      indicators: 'Indicatori',
+      marketCap: 'Cap. di mercato',
+      aiAnalysis: 'Analisi AI',
+      buy: 'Acquisto',
+      sell: 'Vendita',
+      hold: 'Attesa'
+    },
+    en: {
+      title: 'AI Investment Analyzer',
+      subtitle: 'AI-powered stock analysis',
+      disclaimer: 'This is informational analysis, not financial advice. Markets are unpredictable. Always consult a professional before investing.',
+      placeholder: 'Enter ticker (e.g., AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'Analyze',
+      analyzing: 'Analyzing...',
+      recommendation: 'Recommendation',
+      confidence: 'Confidence',
+      targetPrice: 'Target Price',
+      strengths: 'Strengths',
+      risks: 'Risks',
+      outlook: 'Outlook',
+      technicalAnalysis: 'Technical Analysis',
+      fundamentals: 'Fundamentals',
+      news: 'News',
+      trend: 'Trend',
+      support: 'Support',
+      resistance: 'Resistance',
+      indicators: 'Indicators',
+      marketCap: 'Market Cap',
+      aiAnalysis: 'AI Analysis',
+      buy: 'Buy',
+      sell: 'Sell',
+      hold: 'Hold'
+    },
+    es: {
+      title: 'Analizador de Inversiones IA',
+      subtitle: 'Análisis de acciones potenciado por IA',
+      disclaimer: 'Este es un análisis informativo, no asesoramiento financiero. Los mercados son impredecibles. Consulte siempre a un profesional.',
+      placeholder: 'Ingrese ticker (ej: AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'Analizar',
+      analyzing: 'Analizando...',
+      recommendation: 'Recomendación',
+      confidence: 'Confianza',
+      targetPrice: 'Precio objetivo',
+      strengths: 'Fortalezas',
+      risks: 'Riesgos',
+      outlook: 'Perspectivas',
+      technicalAnalysis: 'Análisis Técnico',
+      fundamentals: 'Fundamentos',
+      news: 'Noticias',
+      trend: 'Tendencia',
+      support: 'Soporte',
+      resistance: 'Resistencia',
+      indicators: 'Indicadores',
+      marketCap: 'Cap. de mercado',
+      aiAnalysis: 'Análisis IA',
+      buy: 'Comprar',
+      sell: 'Vender',
+      hold: 'Mantener'
+    },
+    fr: {
+      title: 'Analyseur d\'Investissement IA',
+      subtitle: 'Analyse boursière alimentée par l\'IA',
+      disclaimer: 'Ceci est une analyse informative, pas un conseil financier. Les marchés sont imprévisibles. Consultez toujours un professionnel.',
+      placeholder: 'Entrez le ticker (ex: AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'Analyser',
+      analyzing: 'Analyse...',
+      recommendation: 'Recommandation',
+      confidence: 'Confiance',
+      targetPrice: 'Prix cible',
+      strengths: 'Forces',
+      risks: 'Risques',
+      outlook: 'Perspectives',
+      technicalAnalysis: 'Analyse Technique',
+      fundamentals: 'Fondamentaux',
+      news: 'Actualités',
+      trend: 'Tendance',
+      support: 'Support',
+      resistance: 'Résistance',
+      indicators: 'Indicateurs',
+      marketCap: 'Capitalisation',
+      aiAnalysis: 'Analyse IA',
+      buy: 'Acheter',
+      sell: 'Vendre',
+      hold: 'Conserver'
+    },
+    de: {
+      title: 'KI-Investitionsanalysator',
+      subtitle: 'KI-gestützte Aktienanalyse',
+      disclaimer: 'Dies ist eine informative Analyse, keine Finanzberatung. Märkte sind unvorhersehbar. Konsultieren Sie immer einen Fachmann.',
+      placeholder: 'Ticker eingeben (z.B. AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'Analysieren',
+      analyzing: 'Analysiere...',
+      recommendation: 'Empfehlung',
+      confidence: 'Vertrauen',
+      targetPrice: 'Zielpreis',
+      strengths: 'Stärken',
+      risks: 'Risiken',
+      outlook: 'Ausblick',
+      technicalAnalysis: 'Technische Analyse',
+      fundamentals: 'Fundamentaldaten',
+      news: 'Nachrichten',
+      trend: 'Trend',
+      support: 'Unterstützung',
+      resistance: 'Widerstand',
+      indicators: 'Indikatoren',
+      marketCap: 'Marktkapitalisierung',
+      aiAnalysis: 'KI-Analyse',
+      buy: 'Kaufen',
+      sell: 'Verkaufen',
+      hold: 'Halten'
+    },
+    pt: {
+      title: 'Analisador de Investimentos IA',
+      subtitle: 'Análise de ações com IA',
+      disclaimer: 'Esta é uma análise informativa, não aconselhamento financeiro. Os mercados são imprevisíveis. Consulte sempre um profissional.',
+      placeholder: 'Digite o ticker (ex: AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'Analisar',
+      analyzing: 'Analisando...',
+      recommendation: 'Recomendação',
+      confidence: 'Confiança',
+      targetPrice: 'Preço alvo',
+      strengths: 'Pontos Fortes',
+      risks: 'Riscos',
+      outlook: 'Perspectivas',
+      technicalAnalysis: 'Análise Técnica',
+      fundamentals: 'Fundamentos',
+      news: 'Notícias',
+      trend: 'Tendência',
+      support: 'Suporte',
+      resistance: 'Resistência',
+      indicators: 'Indicadores',
+      marketCap: 'Cap. de mercado',
+      aiAnalysis: 'Análise IA',
+      buy: 'Comprar',
+      sell: 'Vender',
+      hold: 'Manter'
+    },
+    ru: {
+      title: 'ИИ Анализатор Инвестиций',
+      subtitle: 'Анализ акций на основе ИИ',
+      disclaimer: 'Это информационный анализ, а не финансовая консультация. Рынки непредсказуемы. Всегда консультируйтесь со специалистом.',
+      placeholder: 'Введите тикер (напр: AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'Анализировать',
+      analyzing: 'Анализ...',
+      recommendation: 'Рекомендация',
+      confidence: 'Уверенность',
+      targetPrice: 'Целевая цена',
+      strengths: 'Преимущества',
+      risks: 'Риски',
+      outlook: 'Перспективы',
+      technicalAnalysis: 'Технический Анализ',
+      fundamentals: 'Фундаментальные данные',
+      news: 'Новости',
+      trend: 'Тренд',
+      support: 'Поддержка',
+      resistance: 'Сопротивление',
+      indicators: 'Индикаторы',
+      marketCap: 'Капитализация',
+      aiAnalysis: 'ИИ Анализ',
+      buy: 'Купить',
+      sell: 'Продать',
+      hold: 'Держать'
+    },
+    zh: {
+      title: 'AI投资分析器',
+      subtitle: 'AI驱动的股票分析',
+      disclaimer: '这是信息分析，不是财务建议。市场不可预测。投资前请咨询专业人士。',
+      placeholder: '输入股票代码（例：AAPL, TSLA, MSFT, NVDA...）',
+      analyze: '分析',
+      analyzing: '分析中...',
+      recommendation: '建议',
+      confidence: '信心',
+      targetPrice: '目标价格',
+      strengths: '优势',
+      risks: '风险',
+      outlook: '展望',
+      technicalAnalysis: '技术分析',
+      fundamentals: '基本面',
+      news: '新闻',
+      trend: '趋势',
+      support: '支撑',
+      resistance: '阻力',
+      indicators: '指标',
+      marketCap: '市值',
+      aiAnalysis: 'AI分析',
+      buy: '买入',
+      sell: '卖出',
+      hold: '持有'
+    },
+    ja: {
+      title: 'AI投資アナライザー',
+      subtitle: 'AIによる株式分析',
+      disclaimer: 'これは情報分析であり、財務アドバイスではありません。市場は予測不可能です。投資前に専門家に相談してください。',
+      placeholder: 'ティッカーを入力（例：AAPL, TSLA, MSFT, NVDA...）',
+      analyze: '分析',
+      analyzing: '分析中...',
+      recommendation: '推奨',
+      confidence: '信頼度',
+      targetPrice: '目標価格',
+      strengths: '強み',
+      risks: 'リスク',
+      outlook: '見通し',
+      technicalAnalysis: 'テクニカル分析',
+      fundamentals: 'ファンダメンタルズ',
+      news: 'ニュース',
+      trend: 'トレンド',
+      support: 'サポート',
+      resistance: 'レジスタンス',
+      indicators: '指標',
+      marketCap: '時価総額',
+      aiAnalysis: 'AI分析',
+      buy: '買い',
+      sell: '売り',
+      hold: '保持'
+    },
+    ar: {
+      title: 'محلل الاستثمار بالذكاء الاصطناعي',
+      subtitle: 'تحليل الأسهم بالذكاء الاصطناعي',
+      disclaimer: 'هذا تحليل معلوماتي وليس نصيحة مالية. الأسواق لا يمكن التنبؤ بها. استشر دائمًا متخصصًا.',
+      placeholder: 'أدخل الرمز (مثال: AAPL, TSLA, MSFT, NVDA...)',
+      analyze: 'تحليل',
+      analyzing: 'جاري التحليل...',
+      recommendation: 'التوصية',
+      confidence: 'الثقة',
+      targetPrice: 'السعر المستهدف',
+      strengths: 'نقاط القوة',
+      risks: 'المخاطر',
+      outlook: 'التوقعات',
+      technicalAnalysis: 'التحليل الفني',
+      fundamentals: 'البيانات الأساسية',
+      news: 'الأخبار',
+      trend: 'الاتجاه',
+      support: 'الدعم',
+      resistance: 'المقاومة',
+      indicators: 'المؤشرات',
+      marketCap: 'القيمة السوقية',
+      aiAnalysis: 'تحليل الذكاء الاصطناعي',
+      buy: 'شراء',
+      sell: 'بيع',
+      hold: 'احتفظ'
+    }
+  };
+
+  const t = translations[language];
 
   const analyzeStock = async () => {
     if (!ticker.trim()) return;
@@ -14,7 +293,19 @@ const StockAnalyzer = () => {
     setAnalysis(null);
 
     try {
-      // Ricerca informazioni aggiornate sul titolo
+      const languageInstructions = {
+        it: 'Rispondi in Italiano',
+        en: 'Respond in English',
+        es: 'Responde en Español',
+        fr: 'Réponds en Français',
+        de: 'Antworte auf Deutsch',
+        pt: 'Responda em Português',
+        ru: 'Отвечай на русском',
+        zh: '用中文回答',
+        ja: '日本語で答えてください',
+        ar: 'أجب بالعربية'
+      };
+
       const searchResponse = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
@@ -32,47 +323,48 @@ const StockAnalyzer = () => {
           messages: [
             {
               role: "user",
-              content: `Cerca informazioni aggiornate sull'azione ${ticker.toUpperCase()} e fornisci un'analisi completa in formato JSON con questa struttura esatta:
+              content: `${languageInstructions[language]}. Search for updated information about the stock ${ticker.toUpperCase()} and provide a complete analysis in JSON format with this exact structure:
               
 {
-  "company": "Nome completo azienda",
-  "sector": "Settore",
-  "currentPrice": "Prezzo corrente (numero)",
-  "priceChange": "Variazione % (con + o -)",
-  "marketCap": "Capitalizzazione di mercato",
+  "company": "Full company name",
+  "sector": "Sector",
+  "currentPrice": "Current price (number)",
+  "priceChange": "% change (with + or -)",
+  "marketCap": "Market capitalization",
   "fundamentals": {
     "pe": "P/E ratio",
-    "revenue": "Fatturato recente",
-    "eps": "Utile per azione"
+    "revenue": "Recent revenue",
+    "eps": "Earnings per share"
   },
   "technicalAnalysis": {
-    "trend": "Rialzista/Ribassista/Laterale",
-    "support": "Livello supporto",
-    "resistance": "Livello resistenza",
+    "trend": "Bullish/Bearish/Sideways (translated to ${language})",
+    "support": "Support level",
+    "resistance": "Resistance level",
     "indicators": "RSI, MACD, etc."
   },
   "recentNews": [
-    {"title": "Titolo notizia", "summary": "Breve riassunto", "date": "Data"},
-    {"title": "Titolo notizia", "summary": "Breve riassunto", "date": "Data"}
+    {"title": "News title", "summary": "Brief summary", "date": "Date"},
+    {"title": "News title", "summary": "Brief summary", "date": "Date"}
   ],
   "aiInsights": {
     "strengths": ["Pro 1", "Pro 2", "Pro 3"],
-    "risks": ["Rischio 1", "Rischio 2", "Rischio 3"],
-    "outlook": "Prospettive a breve-medio termine"
+    "risks": ["Risk 1", "Risk 2", "Risk 3"],
+    "outlook": "Short-medium term outlook"
   },
   "recommendation": {
-    "action": "Acquisto/Attesa/Vendita",
-    "confidence": "Alta/Media/Bassa",
-    "reasoning": "Spiegazione del rating",
-    "targetPrice": "Prezzo obiettivo stimato"
+    "action": "Buy/Hold/Sell (translated to ${language})",
+    "confidence": "High/Medium/Low (translated to ${language})",
+    "reasoning": "Rating explanation",
+    "targetPrice": "Estimated target price"
   }
 }
 
-Importante: 
-- Usa dati reali e aggiornati dalla ricerca web
-- Sii obiettivo e bilanciato
-- Indica chiaramente i rischi
-- Rispondi SOLO con il JSON, senza testo aggiuntivo`
+Important: 
+- Use real, updated data from web search
+- Be objective and balanced
+- Clearly indicate risks
+- ALL text fields must be in ${languages[language].name}
+- Respond ONLY with JSON, no additional text`
             }
           ]
         })
@@ -80,7 +372,6 @@ Importante:
 
       const data = await searchResponse.json();
       
-      // Estrai il testo dalla risposta
       let responseText = '';
       for (const block of data.content) {
         if (block.type === 'text') {
@@ -88,21 +379,20 @@ Importante:
         }
       }
 
-      // Pulisci e parsa il JSON
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         const cleanJson = jsonMatch[0].replace(/```json|```/g, '').trim();
         const parsedData = JSON.parse(cleanJson);
         setAnalysis(parsedData);
       } else {
-        throw new Error('Formato risposta non valido');
+        throw new Error('Invalid response format');
       }
 
     } catch (error) {
-      console.error('Errore analisi:', error);
+      console.error('Analysis error:', error);
       setAnalysis({
         error: true,
-        message: 'Impossibile recuperare i dati. Verifica il ticker e riprova.'
+        message: 'Unable to retrieve data. Verify the ticker and try again.'
       });
     } finally {
       setLoading(false);
@@ -111,31 +401,44 @@ Importante:
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-6">
-      {/* Header */}
       <div className="max-w-7xl mx-auto mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-3 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-xl">
-            <TrendingUp className="w-8 h-8" />
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-xl">
+              <TrendingUp className="w-8 h-8" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                {t.title}
+              </h1>
+              <p className="text-slate-400 text-sm">{t.subtitle}</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-              Analizzatore Investimenti AI
-            </h1>
-            <p className="text-slate-400 text-sm">Analisi azionarie potenziate dall'intelligenza artificiale</p>
+
+          <div className="flex items-center gap-2 bg-slate-800/50 rounded-lg p-2">
+            <Globe className="w-5 h-5 text-slate-400" />
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="bg-transparent text-white border-none outline-none cursor-pointer"
+            >
+              {Object.entries(languages).map(([code, lang]) => (
+                <option key={code} value={code} className="bg-slate-800">
+                  {lang.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
-        {/* Disclaimer prominente */}
         <div className="mt-4 bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 flex gap-3">
           <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-amber-200">
-            <strong>⚠️ Importante:</strong> Questa è un'analisi informativa, non un consiglio finanziario. 
-            I mercati sono imprevedibili. Consulta sempre un professionista prima di investire.
+            <strong>⚠️ {t.confidence}:</strong> {t.disclaimer}
           </div>
         </div>
       </div>
 
-      {/* Search Bar */}
       <div className="max-w-7xl mx-auto mb-8">
         <div className="flex gap-3">
           <div className="flex-1 relative">
@@ -145,7 +448,7 @@ Importante:
               value={ticker}
               onChange={(e) => setTicker(e.target.value.toUpperCase())}
               onKeyDown={(e) => e.key === 'Enter' && !loading && ticker.trim() && analyzeStock()}
-              placeholder="Inserisci ticker (es: AAPL, TSLA, MSFT, NVDA...)"
+              placeholder={t.placeholder}
               className="w-full pl-12 pr-4 py-4 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
             />
           </div>
@@ -157,22 +460,20 @@ Importante:
             {loading ? (
               <>
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Analisi...
+                {t.analyzing}
               </>
             ) : (
               <>
                 <Brain className="w-5 h-5" />
-                Analizza
+                {t.analyze}
               </>
             )}
           </button>
         </div>
       </div>
 
-      {/* Results */}
       {analysis && !analysis.error && (
         <div className="max-w-7xl mx-auto">
-          {/* Company Header */}
           <div className="bg-gradient-to-r from-slate-800/80 to-slate-800/60 backdrop-blur-sm rounded-xl p-6 mb-6 border border-slate-700/50">
             <div className="flex justify-between items-start">
               <div>
@@ -189,22 +490,21 @@ Importante:
               </div>
             </div>
             <div className="mt-4 text-slate-400">
-              Cap. di mercato: <span className="text-white font-semibold">{analysis.marketCap}</span>
+              {t.marketCap}: <span className="text-white font-semibold">{analysis.marketCap}</span>
             </div>
           </div>
 
-          {/* Tabs */}
           <div className="flex gap-2 mb-6 overflow-x-auto">
             {[
-              { id: 'analysis', label: 'Analisi AI', icon: Brain },
-              { id: 'technical', label: 'Analisi Tecnica', icon: Activity },
-              { id: 'fundamentals', label: 'Fondamentali', icon: BarChart3 },
-              { id: 'news', label: 'Notizie', icon: Newspaper }
+              { id: 'analysis', label: t.aiAnalysis, icon: Brain },
+              { id: 'technical', label: t.technicalAnalysis, icon: Activity },
+              { id: 'fundamentals', label: t.fundamentals, icon: BarChart3 },
+              { id: 'news', label: t.news, icon: Newspaper }
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white'
                     : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800'
@@ -216,35 +516,32 @@ Importante:
             ))}
           </div>
 
-          {/* Tab Content */}
           <div className="space-y-6">
             {activeTab === 'analysis' && (
               <>
-                {/* Recommendation Card */}
                 <div className={`rounded-xl p-6 border-2 ${
-                  analysis.recommendation?.action === 'Acquisto' ? 'bg-emerald-500/10 border-emerald-500/50' :
-                  analysis.recommendation?.action === 'Vendita' ? 'bg-red-500/10 border-red-500/50' :
+                  analysis.recommendation?.action?.toLowerCase().includes(t.buy.toLowerCase()) ? 'bg-emerald-500/10 border-emerald-500/50' :
+                  analysis.recommendation?.action?.toLowerCase().includes(t.sell.toLowerCase()) ? 'bg-red-500/10 border-red-500/50' :
                   'bg-amber-500/10 border-amber-500/50'
                 }`}>
                   <div className="flex items-center gap-3 mb-4">
                     <DollarSign className="w-8 h-8" />
                     <div>
-                      <h3 className="text-2xl font-bold">Raccomandazione: {analysis.recommendation?.action}</h3>
-                      <p className="text-sm opacity-80">Confidenza: {analysis.recommendation?.confidence}</p>
+                      <h3 className="text-2xl font-bold">{t.recommendation}: {analysis.recommendation?.action}</h3>
+                      <p className="text-sm opacity-80">{t.confidence}: {analysis.recommendation?.confidence}</p>
                     </div>
                   </div>
                   <p className="mb-4">{analysis.recommendation?.reasoning}</p>
                   {analysis.recommendation?.targetPrice && (
                     <div className="text-lg">
-                      <strong>Prezzo obiettivo:</strong> {analysis.recommendation.targetPrice}
+                      <strong>{t.targetPrice}:</strong> {analysis.recommendation.targetPrice}
                     </div>
                   )}
                 </div>
 
-                {/* AI Insights */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-                    <h3 className="text-xl font-bold mb-4 text-emerald-400">✓ Punti di Forza</h3>
+                    <h3 className="text-xl font-bold mb-4 text-emerald-400">✓ {t.strengths}</h3>
                     <ul className="space-y-2">
                       {analysis.aiInsights?.strengths?.map((strength, i) => (
                         <li key={i} className="flex gap-2">
@@ -256,7 +553,7 @@ Importante:
                   </div>
 
                   <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-                    <h3 className="text-xl font-bold mb-4 text-red-400">⚠ Rischi</h3>
+                    <h3 className="text-xl font-bold mb-4 text-red-400">⚠ {t.risks}</h3>
                     <ul className="space-y-2">
                       {analysis.aiInsights?.risks?.map((risk, i) => (
                         <li key={i} className="flex gap-2">
@@ -269,7 +566,7 @@ Importante:
                 </div>
 
                 <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-                  <h3 className="text-xl font-bold mb-3">🔮 Prospettive</h3>
+                  <h3 className="text-xl font-bold mb-3">🔮 {t.outlook}</h3>
                   <p className="text-slate-300">{analysis.aiInsights?.outlook}</p>
                 </div>
               </>
@@ -277,30 +574,26 @@ Importante:
 
             {activeTab === 'technical' && (
               <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-                <h3 className="text-2xl font-bold mb-6">Analisi Tecnica</h3>
+                <h3 className="text-2xl font-bold mb-6">{t.technicalAnalysis}</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <div className="mb-4">
-                      <span className="text-slate-400">Trend:</span>
-                      <span className={`ml-2 font-bold ${
-                        analysis.technicalAnalysis?.trend === 'Rialzista' ? 'text-emerald-400' :
-                        analysis.technicalAnalysis?.trend === 'Ribassista' ? 'text-red-400' :
-                        'text-amber-400'
-                      }`}>
+                      <span className="text-slate-400">{t.trend}:</span>
+                      <span className="ml-2 font-bold text-emerald-400">
                         {analysis.technicalAnalysis?.trend}
                       </span>
                     </div>
                     <div className="mb-4">
-                      <span className="text-slate-400">Supporto:</span>
+                      <span className="text-slate-400">{t.support}:</span>
                       <span className="ml-2 font-semibold">{analysis.technicalAnalysis?.support}</span>
                     </div>
                     <div>
-                      <span className="text-slate-400">Resistenza:</span>
+                      <span className="text-slate-400">{t.resistance}:</span>
                       <span className="ml-2 font-semibold">{analysis.technicalAnalysis?.resistance}</span>
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2 text-slate-300">Indicatori:</h4>
+                    <h4 className="font-semibold mb-2 text-slate-300">{t.indicators}:</h4>
                     <p className="text-slate-400">{analysis.technicalAnalysis?.indicators}</p>
                   </div>
                 </div>
@@ -309,14 +602,14 @@ Importante:
 
             {activeTab === 'fundamentals' && (
               <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-                <h3 className="text-2xl font-bold mb-6">Dati Fondamentali</h3>
+                <h3 className="text-2xl font-bold mb-6">{t.fundamentals}</h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-slate-900/50 rounded-lg p-4">
                     <div className="text-slate-400 text-sm mb-1">P/E Ratio</div>
                     <div className="text-2xl font-bold">{analysis.fundamentals?.pe}</div>
                   </div>
                   <div className="bg-slate-900/50 rounded-lg p-4">
-                    <div className="text-slate-400 text-sm mb-1">Fatturato</div>
+                    <div className="text-slate-400 text-sm mb-1">Revenue</div>
                     <div className="text-2xl font-bold">{analysis.fundamentals?.revenue}</div>
                   </div>
                   <div className="bg-slate-900/50 rounded-lg p-4">
@@ -327,56 +620,4 @@ Importante:
               </div>
             )}
 
-            {activeTab === 'news' && (
-              <div className="space-y-4">
-                {analysis.recentNews?.map((news, i) => (
-                  <div key={i} className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-slate-600/50 transition-colors">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-lg">{news.title}</h4>
-                      <span className="text-slate-400 text-sm">{news.date}</span>
-                    </div>
-                    <p className="text-slate-300">{news.summary}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {analysis?.error && (
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6 text-center">
-            <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-3" />
-            <p className="text-red-200">{analysis.message}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Quick Info */}
-      {!analysis && !loading && (
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-              <Brain className="w-10 h-10 text-emerald-400 mb-3" />
-              <h3 className="font-bold text-lg mb-2">Analisi AI Avanzata</h3>
-              <p className="text-slate-400 text-sm">Ricerca web in tempo reale e analisi intelligente dei dati</p>
-            </div>
-            <div className="bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-              <Activity className="w-10 h-10 text-cyan-400 mb-3" />
-              <h3 className="font-bold text-lg mb-2">Dati Aggiornati</h3>
-              <p className="text-slate-400 text-sm">Prezzi, notizie e analisi tecniche sempre aggiornate</p>
-            </div>
-            <div className="bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-              <BarChart3 className="w-10 h-10 text-purple-400 mb-3" />
-              <h3 className="font-bold text-lg mb-2">Analisi Completa</h3>
-              <p className="text-slate-400 text-sm">Fondamentali, tecnica, sentiment e raccomandazioni</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default StockAnalyzer;
+            

@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import { Configuration, OpenAIApi } from "openai";
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { Configuration, OpenAIApi } from 'openai';
 
 dotenv.config();
 
@@ -14,23 +14,27 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-app.get("/", (req, res) => {
-  res.send("AI Stock Bot is running!");
+// Endpoint di base
+app.get('/', (req, res) => {
+  res.send('AI Stock Bot è attivo!');
 });
 
-app.post("/chat", async (req, res) => {
-  const { message } = req.body;
+// Endpoint per la chat
+app.post('/chat', async (req, res) => {
+  const { message, userId } = req.body;
+
+  // Qui implementeremo la memoria e altre funzionalità
 
   try {
     const response = await openai.createChatCompletion({
-      model: "gpt-4o-mini",
+      model: 'gpt-4o-mini',
       messages: [
         {
-          role: "system",
+          role: 'system',
           content: `
-Sei un assistente AI esperto di mercati finanziari, azioni, criptovalute e investimenti. Rispondi nella lingua dell'utente e fornisci analisi e scenari futuri.`
+Sei un assistente AI esperto di mercati finanziari, azioni, criptovalute e investimenti. Rispondi nella lingua dell'utente e fornisci analisi approfondite.`
         },
-        { role: "user", content: message }
+        { role: 'user', content: message }
       ]
     });
 
@@ -43,5 +47,5 @@ Sei un assistente AI esperto di mercati finanziari, azioni, criptovalute e inves
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server in esecuzione sulla porta ${PORT}`);
 });
